@@ -24,6 +24,19 @@ int compile(char *compilecommand)// outputfile: target     inputffile: source.ex
 }
 void run()
 {
+    int ofile,ifile;
+    ofile=open("test.out",O_WRONLY|O_CREAT|O_TRUNC,0644);
+    if(ofile==-1)
+    {
+        _exit(EXIT_FAILURE);
+    }
+    ifile=open("test.in",O_RDONLY);
+    if(ifile==-1)
+    {
+        _exit(EXIT_FAILURE);
+    }
+    dup2(ofile,STDOUT_FILENO);
+    dup2(ifile,STDIN_FILENO);
     execl("./target","target",NULL);
     _exit(EXIT_FAILURE);
 }
