@@ -8,3 +8,4 @@ test*
 sandbox/
 history/
 judge
+settings.py

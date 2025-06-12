@@ -3,6 +3,8 @@ from zipfile import ZipFile
 from model import *
 from judgelib import judge as _judge
 from json import dumps,loads
+from requests import post as _post
+from settings import *
 def lin(ls1,ls2):
     for i in ls1:
         if not i in ls2:
@@ -21,3 +23,12 @@ def judge(code,language,O2,time_limit,memory_limit,problem_id,testcases,record_i
         rec.detail = dumps(detail)
         db.session.add(rec)
         db.session.commit()
+        _post(FRONTEND_URL + "/callback",{
+            "id":str(rec.id),
+            "judger":JUDGER_NAME,
+            "uuid":UUID,
+            "result":rec.result,
+            "memory":str(rec.memory),
+            "runtime":str(rec.runtime),
+            "detail":rec.detail
+        })

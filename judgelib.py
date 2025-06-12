@@ -37,6 +37,7 @@ def judge(code,language,O2,time_limit,memory_limit,problem_id,testcases):
         for i in range(len(result)):
             result[i] = result[i].split(" ")
             result[i][0] = int(result[i][0])
+            print(result[i])
             result[i][2] = int(result[i][2])
             result[i][3] = int(result[i][3])
     return status,result

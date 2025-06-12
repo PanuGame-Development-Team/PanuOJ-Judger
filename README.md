@@ -12,7 +12,24 @@
 ### 构建方法
 1. 编译 `judge.c`，执行 `gcc judge.c -o judge -O2 -lm -w`。
 2. 创建所需要的 `testcases`、`sandbox` 文件夹，执行 `mkdir testcases sandbox`。
-3. 更改 `settings.py` 中的 `HOST`、`CONFIG` 等字段。
+3. 创建 `settings.py` 文件，并填写相关配置，参考样板如下：
+```python
+CONFIG = {
+    'SQLALCHEMY_DATABASE_URI': 'mysql+pymysql://root:root@localhost:3306/PojJudger',
+    'SQLALCHEMY_TRACK_MODIFICATIONS': False,
+    "SQLALCHEMY_ENGINE_OPTIONS": {
+        "pool_size": 10,
+        "pool_recycle": 1800,
+        "pool_pre_ping": True,
+    }
+}
+DEFAULT_IMAGE = "pojenv"
+DEFAULT_MEMORY = 256000
+DEFAULT_RUNTIME = 1000
+FRONTEND_URL = ""
+JUDGER_NAME = "Mercury"
+UUID = ""                              # 你的ID，对于前端回调使用。
+```
 ### 运行方法
 1. 使用 gunicorn/uwsgi + systemctl 部署。如有必要，可以置一层nginx反向代理。
 2. 在前端服务器 `judgerlib.py` 中添加判题机地址。
